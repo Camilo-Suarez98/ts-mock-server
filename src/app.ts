@@ -70,7 +70,7 @@ app.delete('/api/tasks/:id', (req: Request, res: Response) => {
     try {
         res.status(200).json(deleteTask)
     } catch (error) {
-        res.status(400).json({ message: "Error updating the task" })
+        res.status(400).json({ message: "Error when you try to delete task" })
     }
 })
 
