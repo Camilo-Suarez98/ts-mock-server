@@ -41,12 +41,38 @@ app.post('/api/tasks', (req: Request, res: Response) => {
     const addTask = tasks.push(newTask)
 
     try {
-        res.json(addTask)
+        res.status(201).json(addTask)
     } catch (error) {
         res.status(401).json({ message: "Error creating new task" })
     }
 })
 
+app.put('/api/tasks/:id', (req: Request, res: Response) => {
+    const { id } = req.params
+    const data = req.body
+
+    const findTaskToEdit = tasks.find(task => task.id === parseInt(id))
+
+    findTaskToEdit.todo = data.todo
+
+    try {
+        res.status(202).json(findTaskToEdit)
+    } catch (error) {
+        res.status(403).json({ message: "Error updating the task" })
+    }
+})
+
+app.delete('/api/tasks/:id', (req: Request, res: Response) => {
+    const { id } = req.params
+
+    const deleteTask = tasks.splice(parseInt(id) - 1, parseInt(id) - 1)
+
+    try {
+        res.status(200).json(deleteTask)
+    } catch (error) {
+        res.status(400).json({ message: "Error updating the task" })
+    }
+})
 
 app.listen(port, () => {
     console.log(`Server Running Up on port ${port}`);
